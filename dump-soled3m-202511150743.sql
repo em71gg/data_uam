@@ -1,0 +1,978 @@
+-- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
+--
+-- Host: localhost    Database: soled3m
+-- ------------------------------------------------------
+-- Server version	8.0.43
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `admin`
+--
+
+DROP TABLE IF EXISTS `admin`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `admin` (
+  `id` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `apellidos` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `contrasenya` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefono` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cargo` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Administrador',
+  `fecha_creacion` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_actualizacion` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `verified` tinyint NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IDX_de87485f6489f5d0995f584195` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `admin`
+--
+
+LOCK TABLES `admin` WRITE;
+/*!40000 ALTER TABLE `admin` DISABLE KEYS */;
+INSERT INTO `admin` VALUES ('LNK72657','Juan','Pérez','juan.perez@colegio.com','$2b$10$2cCy8akcTzy3vXDP5Mp3reh2bq4t0AP60Onha82h19MDnCnBqX./e','+34123456789','Administrador','2025-09-24 15:55:02','2025-09-24 15:55:02',0),('MGL63851','Jesús','Alonso Tapia','jesus@ejemplo.com','$2b$10$I1KLey8Otk5BkVGtLpN9Ie7xyoWoBi2qEGzeIicAzv9cJU5VjnN/G','123456789','Administrador','2025-06-20 13:18:00','2025-09-24 15:57:08',1),('QPK52736','Julio','Pérez','julio.perez@colegio.com','$2b$10$i.bet5op9BGwi/.Gce3vCuULyMLQ4IRtjoUPK7BQJaaQSPk8t2/pm','+34123456789','Administrador','2025-10-01 18:03:04','2025-10-01 18:03:04',0),('SMZ94185','Manolo','Pérez','samuela.perez@colegio.com','$2b$10$A3lRPoF9DjhHn6NdP0qOeOZC97d7yn3UH9aFyh396kx/XQQXqzMkS','+34123456789','Administrador','2025-10-02 16:47:04','2025-10-02 16:47:04',0),('SNI38555','Manolito','Pérez','manolo.perez@colegio.com','$2b$10$oadwkgDY17I1uf/BTLTojuRz3TpenVCopeZkHmjpro0LwT9Kt4No.','+3434333435','Super Administrador','2025-10-02 10:29:24','2025-10-26 11:00:31',1),('YPV93788','AdminPrueba','Ejemplo','admin.prueba@colegio.com','$2b$10$B1XAAafCJLr.mBwP8El88OE3.2YZvsK11vDp2KfQwPzAw1QCAxyti','+34123456789','Administrador','2025-07-21 10:13:40','2025-07-23 07:45:54',1);
+/*!40000 ALTER TABLE `admin` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `alumno`
+--
+
+DROP TABLE IF EXISTS `alumno`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `alumno` (
+  `id` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_centro` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nacionalidad` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ciudad` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sexo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `edad` int NOT NULL,
+  `curso_escolar_id` year NOT NULL,
+  `numero_lista` int NOT NULL,
+  `fecha_creacion` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_actualizacion` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `FK_703ebba6c75abd33a9186f20b65` (`id_centro`),
+  KEY `FK_fe26fc02c36402f24bb8921cdf3` (`curso_escolar_id`),
+  CONSTRAINT `FK_703ebba6c75abd33a9186f20b65` FOREIGN KEY (`id_centro`) REFERENCES `centro` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_fe26fc02c36402f24bb8921cdf3` FOREIGN KEY (`curso_escolar_id`) REFERENCES `curso_escolar` (`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `alumno`
+--
+
+LOCK TABLES `alumno` WRITE;
+/*!40000 ALTER TABLE `alumno` DISABLE KEYS */;
+INSERT INTO `alumno` VALUES ('301010101','00000001','Española','Sevilla','Femenino',15,2024,1,'2025-06-20 13:18:00','2025-10-08 17:51:18'),('301010201','00000001','China','Sevilla','Masculino',9,2026,1,'2025-11-13 10:19:48','2025-11-13 10:19:48'),('301010202','00000001','Española','Sevilla','Femenino',9,2026,12,'2025-11-13 10:40:39','2025-11-13 10:40:39'),('301010203','00000001','Española','Sevilla','Femenino',9,2026,2,'2025-11-13 10:48:32','2025-11-13 10:48:32'),('301010204','00000001','Chipre','Sevilla','Masculino',9,2026,5,'2025-11-13 11:24:13','2025-11-13 11:24:13'),('301010205','00000001','Española','Sevilla','Femenino',9,2026,3,'2025-11-13 11:45:13','2025-11-13 11:45:13'),('301010206','00000001','Afganistán','Sevilla','Masculino',9,2026,4,'2025-11-13 11:54:49','2025-11-13 11:54:49'),('301010301','00000001','Española','Sevilla','Masculino',9,2026,1,'2025-11-13 15:09:11','2025-11-13 15:09:11'),('301010302','00000001','Española','Sevilla','Femenino',9,2026,2,'2025-11-13 15:09:30','2025-11-13 15:09:30'),('301010401','00000001','Española','Sevilla','Femenino',9,2026,1,'2025-11-13 15:07:47','2025-11-13 15:07:47'),('301010402','00000001','Española','Sevilla','Femenino',9,2026,2,'2025-11-13 15:08:10','2025-11-13 15:08:10'),('301020201','00000001','Española','Sevilla','Femenino',10,2026,1,'2025-11-13 16:04:43','2025-11-13 16:04:43'),('301020202','00000001','Española','Sevilla','Femenino',10,2026,2,'2025-11-13 16:04:52','2025-11-13 16:04:52'),('301030101','00000001','Española','Chiclana','Femenino',16,2024,1,'2025-10-08 17:28:44','2025-10-08 17:51:18'),('301030102','00000001','Española','Chiclana','Femenino',16,2024,1,'2025-10-08 17:33:17','2025-10-08 17:51:18'),('301030103','00000001','Española','Oviedo','Femenino',16,2024,1,'2025-10-08 17:33:33','2025-10-08 17:51:18'),('301030104','00000001','Española','Oviedo','Femenino',16,2024,1,'2025-10-08 17:35:31','2025-10-08 17:51:18'),('301030106','00000001','Española','Oviedo','Femenino',16,2024,1,'2025-10-08 17:44:10','2025-10-08 17:51:18');
+/*!40000 ALTER TABLE `alumno` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cc`
+--
+
+DROP TABLE IF EXISTS `cc`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cc` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_centro` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `curso_escolar_id` year NOT NULL,
+  `fecha_registro` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `auton1` int DEFAULT NULL,
+  `condeval1` int DEFAULT NULL,
+  `conprevio1` int DEFAULT NULL,
+  `pasoapaso1` int DEFAULT NULL,
+  `particip1` int DEFAULT NULL,
+  `dedica1` int DEFAULT NULL,
+  `clarorg1` int DEFAULT NULL,
+  `equidad1` int DEFAULT NULL,
+  `conprevio2` int DEFAULT NULL,
+  `errorpos1` int DEFAULT NULL,
+  `elogio1` int DEFAULT NULL,
+  `dedica2` int DEFAULT NULL,
+  `conecta1` int DEFAULT NULL,
+  `ejemplos1` int DEFAULT NULL,
+  `elogio2` int DEFAULT NULL,
+  `mensapren1` int DEFAULT NULL,
+  `condeval2` int DEFAULT NULL,
+  `clarobj1` int DEFAULT NULL,
+  `clarorg2` int DEFAULT NULL,
+  `ejemplos2` int DEFAULT NULL,
+  `errorpos2` int DEFAULT NULL,
+  `ritmorel1` int DEFAULT NULL,
+  `mensapren2` int DEFAULT NULL,
+  `equidad2` int DEFAULT NULL,
+  `novedad1` int DEFAULT NULL,
+  `conecta2` int DEFAULT NULL,
+  `ritmorel2` int DEFAULT NULL,
+  `clarobj2` int DEFAULT NULL,
+  `auton2` int DEFAULT NULL,
+  `particip2` int DEFAULT NULL,
+  `pasoapaso2` int DEFAULT NULL,
+  `novedad2` int DEFAULT NULL,
+  `CDC1` int DEFAULT NULL,
+  `CDC2` int DEFAULT NULL,
+  `CDC3` int DEFAULT NULL,
+  `CDC4` int DEFAULT NULL,
+  `CDC5` int DEFAULT NULL,
+  `CDC6` int DEFAULT NULL,
+  `CDC7` int DEFAULT NULL,
+  `CDC8` int DEFAULT NULL,
+  `CDC9` int DEFAULT NULL,
+  `CDC10` int DEFAULT NULL,
+  `CDC11` int DEFAULT NULL,
+  `CDC12` int DEFAULT NULL,
+  `CDC13` int DEFAULT NULL,
+  `CDC14` int DEFAULT NULL,
+  `CDC15` int DEFAULT NULL,
+  `MOT01APR` int DEFAULT NULL,
+  `MOT02RES` int DEFAULT NULL,
+  `MOT03EVIT` int DEFAULT NULL,
+  `MOT04RES` int DEFAULT NULL,
+  `MOT05EVIT` int DEFAULT NULL,
+  `MOT06APR` int DEFAULT NULL,
+  `MOT07EVIT` int DEFAULT NULL,
+  `MOT08APR` int DEFAULT NULL,
+  `MOT09RES` int DEFAULT NULL,
+  `CEM01` int DEFAULT NULL,
+  `CEM02` int DEFAULT NULL,
+  `CEM03` int DEFAULT NULL,
+  `CEM04` int DEFAULT NULL,
+  `CEM05` int DEFAULT NULL,
+  `CEM06` int DEFAULT NULL,
+  `CEM07` int DEFAULT NULL,
+  `CEM08` int DEFAULT NULL,
+  `CEM09` int DEFAULT NULL,
+  `CEM10` int DEFAULT NULL,
+  `CEM11` int DEFAULT NULL,
+  `CEM12` int DEFAULT NULL,
+  `CEM13` int DEFAULT NULL,
+  `CEM14` int DEFAULT NULL,
+  `CEM15` int DEFAULT NULL,
+  `CEM16` int DEFAULT NULL,
+  `EXP01CG` int DEFAULT NULL,
+  `EXP02CC` int DEFAULT NULL,
+  `EXP03HM` int DEFAULT NULL,
+  `EXP04CE` int DEFAULT NULL,
+  `EXP05HS` int DEFAULT NULL,
+  `EXP06HC` int DEFAULT NULL,
+  `EXP07CM` int DEFAULT NULL,
+  `EXP08HE` int DEFAULT NULL,
+  `EXP09CS` int DEFAULT NULL,
+  `EXP10HG` int DEFAULT NULL,
+  `CV01` int DEFAULT NULL,
+  `CV02` int DEFAULT NULL,
+  `CV03` int DEFAULT NULL,
+  `CV04` int DEFAULT NULL,
+  `CV05` int DEFAULT NULL,
+  `CV06` int DEFAULT NULL,
+  `CV07` int DEFAULT NULL,
+  `CV08` int DEFAULT NULL,
+  `CV09` int DEFAULT NULL,
+  `CV10` int DEFAULT NULL,
+  `CV11` int DEFAULT NULL,
+  `CV12` int DEFAULT NULL,
+  `CV13` int DEFAULT NULL,
+  `CV14` int DEFAULT NULL,
+  `CV15` int DEFAULT NULL,
+  `CV16` int DEFAULT NULL,
+  `CV17` int DEFAULT NULL,
+  `CV18` int DEFAULT NULL,
+  `CV19` int DEFAULT NULL,
+  `CV20` int DEFAULT NULL,
+  `CV21` int DEFAULT NULL,
+  `CV22` int DEFAULT NULL,
+  `CV23` int DEFAULT NULL,
+  `CV24` int DEFAULT NULL,
+  `CV25` int DEFAULT NULL,
+  `CV26` int DEFAULT NULL,
+  `CV27` int DEFAULT NULL,
+  `CV28` int DEFAULT NULL,
+  `CV29` int DEFAULT NULL,
+  `CV30` int DEFAULT NULL,
+  `CV31` int DEFAULT NULL,
+  `CV32` int DEFAULT NULL,
+  `CV33` int DEFAULT NULL,
+  `CV34` int DEFAULT NULL,
+  `CV35` int DEFAULT NULL,
+  `CV36` int DEFAULT NULL,
+  `CV37` int DEFAULT NULL,
+  `CV38` int DEFAULT NULL,
+  `CV39` int DEFAULT NULL,
+  `CV40` int DEFAULT NULL,
+  `CV41` int DEFAULT NULL,
+  `CV42` int DEFAULT NULL,
+  `CV43` int DEFAULT NULL,
+  `CV44` int DEFAULT NULL,
+  `CV45` int DEFAULT NULL,
+  `CV46` int DEFAULT NULL,
+  `CV47` int DEFAULT NULL,
+  `CV48` int DEFAULT NULL,
+  `INTSOCN1` int DEFAULT NULL,
+  `INTSOCP1` int DEFAULT NULL,
+  `INTSOCN2` int DEFAULT NULL,
+  `INTSOCP2` int DEFAULT NULL,
+  `INTSOCN3` int DEFAULT NULL,
+  `INTSOCP3` int DEFAULT NULL,
+  `INTSOCN4` int DEFAULT NULL,
+  `INTSOCP4` int DEFAULT NULL,
+  `INTSOCN5` int DEFAULT NULL,
+  `INTSOCP5` int DEFAULT NULL,
+  `INTSOCN6` int DEFAULT NULL,
+  `INTSOCP6` int DEFAULT NULL,
+  `P_COSTO1` int DEFAULT NULL,
+  `C_COMPET1` int DEFAULT NULL,
+  `P_COSTO2` int DEFAULT NULL,
+  `C_COMPET2` int DEFAULT NULL,
+  `P_COSTO3` int DEFAULT NULL,
+  `C_COMPET3` int DEFAULT NULL,
+  `expresult1` int DEFAULT NULL,
+  `interes1` int DEFAULT NULL,
+  `habilper1` int DEFAULT NULL,
+  `satisfapren1` int DEFAULT NULL,
+  `esfuerzo1` int DEFAULT NULL,
+  `expresult2` int DEFAULT NULL,
+  `interes2` int DEFAULT NULL,
+  `satisfapren2` int DEFAULT NULL,
+  `habilper2` int DEFAULT NULL,
+  `esfuerzo2` int DEFAULT NULL,
+  `expresult3` int DEFAULT NULL,
+  `satisfapren3` int DEFAULT NULL,
+  `habilper3` int DEFAULT NULL,
+  `interes3` int DEFAULT NULL,
+  `esfuerzo3` int DEFAULT NULL,
+  `satisfapren4` int DEFAULT NULL,
+  `CRITCDC1` int DEFAULT NULL,
+  `CRITCDC2` int DEFAULT NULL,
+  `CRITCEM1` int DEFAULT NULL,
+  `CRITCDC3` int DEFAULT NULL,
+  `CRITCDC4` int DEFAULT NULL,
+  `CRITCEM2` int DEFAULT NULL,
+  `CRITCDC5` int DEFAULT NULL,
+  `CRITCDC6` int DEFAULT NULL,
+  `CRITCEM3` int DEFAULT NULL,
+  `CRITCDC7` int DEFAULT NULL,
+  `CRITCDC8` int DEFAULT NULL,
+  `CRITCEM4` int DEFAULT NULL,
+  `auton2X` int DEFAULT NULL,
+  `condeval1X` int DEFAULT NULL,
+  `conprevio2X` int DEFAULT NULL,
+  `pasoapaso2X` int DEFAULT NULL,
+  `particip1X` int DEFAULT NULL,
+  `dedica1X` int DEFAULT NULL,
+  `clarorg1X` int DEFAULT NULL,
+  `equidad1X` int DEFAULT NULL,
+  `errorpos1X` int DEFAULT NULL,
+  `elogio2X` int DEFAULT NULL,
+  `conecta2X` int DEFAULT NULL,
+  `ejemplos1X` int DEFAULT NULL,
+  `clarobj1X` int DEFAULT NULL,
+  `ritmorel1X` int DEFAULT NULL,
+  `novedad2X` int DEFAULT NULL,
+  `CEM02X` int DEFAULT NULL,
+  `CEM04X` int DEFAULT NULL,
+  `CEM06X` int DEFAULT NULL,
+  `CEM08X` int DEFAULT NULL,
+  `CEM10X` int DEFAULT NULL,
+  `CEM12X` int DEFAULT NULL,
+  `CEM14X` int DEFAULT NULL,
+  `CEM16X` int DEFAULT NULL,
+  `CV02X` int DEFAULT NULL,
+  `CV04X` int DEFAULT NULL,
+  `CV08X` int DEFAULT NULL,
+  `CV10X` int DEFAULT NULL,
+  `CV15X` int DEFAULT NULL,
+  `CV17X` int DEFAULT NULL,
+  `CV21X` int DEFAULT NULL,
+  `CV23X` int DEFAULT NULL,
+  `CV24X` int DEFAULT NULL,
+  `CV25X` int DEFAULT NULL,
+  `CV26X` int DEFAULT NULL,
+  `CV27X` int DEFAULT NULL,
+  `CV29X` int DEFAULT NULL,
+  `CV30X` int DEFAULT NULL,
+  `CV32X` int DEFAULT NULL,
+  `CV33X` int DEFAULT NULL,
+  `CV35X` int DEFAULT NULL,
+  `CV38X` int DEFAULT NULL,
+  `CV41X` int DEFAULT NULL,
+  `CV48X` int DEFAULT NULL,
+  `expresult2X` int DEFAULT NULL,
+  `interes3X` int DEFAULT NULL,
+  `habilper1X` int DEFAULT NULL,
+  `esfuerzo2X` int DEFAULT NULL,
+  `satisfapren2X` int DEFAULT NULL,
+  `satisfapren3X` int DEFAULT NULL,
+  `CRITCDC1X` int DEFAULT NULL,
+  `CRITCDC3X` int DEFAULT NULL,
+  `CRITCDC5X` int DEFAULT NULL,
+  `CRITCDC7X` int DEFAULT NULL,
+  `novedad` int DEFAULT NULL,
+  `conprevio` int DEFAULT NULL,
+  `conecta` int DEFAULT NULL,
+  `particip` int DEFAULT NULL,
+  `mensapren` int DEFAULT NULL,
+  `clarobj` int DEFAULT NULL,
+  `clarorg` int DEFAULT NULL,
+  `auton` int DEFAULT NULL,
+  `pasoapaso` int DEFAULT NULL,
+  `ejemplos` int DEFAULT NULL,
+  `ritmorel` int DEFAULT NULL,
+  `condeval` int DEFAULT NULL,
+  `errorpos` int DEFAULT NULL,
+  `elogio` int DEFAULT NULL,
+  `equidad` int DEFAULT NULL,
+  `dedica` int DEFAULT NULL,
+  `TAI` int DEFAULT NULL,
+  `TAG` int DEFAULT NULL,
+  `VAI` int DEFAULT NULL,
+  `VAG` int DEFAULT NULL,
+  `AAI` int DEFAULT NULL,
+  `AAG` int DEFAULT NULL,
+  `PAI` int DEFAULT NULL,
+  `PAG` int DEFAULT NULL,
+  `P_praise` int DEFAULT NULL,
+  `P_understanding` int DEFAULT NULL,
+  `P_listening` int DEFAULT NULL,
+  `P_defense` int DEFAULT NULL,
+  `P_help` int DEFAULT NULL,
+  `P_isolation` int DEFAULT NULL,
+  `P_nocage` int DEFAULT NULL,
+  `S_praise` int DEFAULT NULL,
+  `S_understanding` int DEFAULT NULL,
+  `S_listening` int DEFAULT NULL,
+  `S_defense` int DEFAULT NULL,
+  `S_help` int DEFAULT NULL,
+  `S_isolation` int DEFAULT NULL,
+  `S_nocage` int DEFAULT NULL,
+  `exp_resultado` int DEFAULT NULL,
+  `interes` int DEFAULT NULL,
+  `hab_percibida` int DEFAULT NULL,
+  `esfuerzo` int DEFAULT NULL,
+  `satisfaccion` int DEFAULT NULL,
+  `CMC_Apr` decimal(10,2) DEFAULT NULL,
+  `T_CMCAprDIR` decimal(10,2) DEFAULT NULL,
+  `CMCAprFACT` decimal(10,2) DEFAULT NULL,
+  `T_CMCAprFACT` decimal(10,2) DEFAULT NULL,
+  `T_novedad` decimal(10,2) DEFAULT NULL,
+  `T_conprevio` decimal(10,2) DEFAULT NULL,
+  `T_conecta` decimal(10,2) DEFAULT NULL,
+  `T_particip` decimal(10,2) DEFAULT NULL,
+  `T_mensapren` decimal(10,2) DEFAULT NULL,
+  `T_clarobj` decimal(10,2) DEFAULT NULL,
+  `T_clarorg` decimal(10,2) DEFAULT NULL,
+  `T_auton` decimal(10,2) DEFAULT NULL,
+  `T_pasoapaso` decimal(10,2) DEFAULT NULL,
+  `T_ejemplos` decimal(10,2) DEFAULT NULL,
+  `T_ritmorel` decimal(10,2) DEFAULT NULL,
+  `T_condeval` decimal(10,2) DEFAULT NULL,
+  `T_errorpos` decimal(10,2) DEFAULT NULL,
+  `T_elogio` decimal(10,2) DEFAULT NULL,
+  `T_equidad` decimal(10,2) DEFAULT NULL,
+  `T_dedica` decimal(10,2) DEFAULT NULL,
+  `CDC_AvisoPub` decimal(10,2) DEFAULT NULL,
+  `CDC_RefOtros` decimal(10,2) DEFAULT NULL,
+  `CDC_Castigo` decimal(10,2) DEFAULT NULL,
+  `CDC_Elogio_RAZ` decimal(10,2) DEFAULT NULL,
+  `CDC_Autocontrol` decimal(10,2) DEFAULT NULL,
+  `CDC_ESTaversivas` decimal(10,2) DEFAULT NULL,
+  `CDC_ESTconstructivas` decimal(10,2) DEFAULT NULL,
+  `CMD_F_AVERST` decimal(10,2) DEFAULT NULL,
+  `CMD_F_CONST` decimal(10,2) DEFAULT NULL,
+  `T_CMD_F_AVERST` decimal(10,2) DEFAULT NULL,
+  `T_CMD_F_CONST` decimal(10,2) DEFAULT NULL,
+  `CEM_GPO` decimal(10,2) DEFAULT NULL,
+  `CEM_SUJ` decimal(10,2) DEFAULT NULL,
+  `Re_to_EMOT` decimal(10,2) DEFAULT NULL,
+  `CEM_F` decimal(10,2) DEFAULT NULL,
+  `T_CEM_F` decimal(10,2) DEFAULT NULL,
+  `CCG` decimal(10,2) DEFAULT NULL,
+  `CCA` decimal(10,2) DEFAULT NULL,
+  `T_P_praise` decimal(10,2) DEFAULT NULL,
+  `T_P_understanding` decimal(10,2) DEFAULT NULL,
+  `T_P_listening` decimal(10,2) DEFAULT NULL,
+  `T_P_defense` decimal(10,2) DEFAULT NULL,
+  `T_P_help` decimal(10,2) DEFAULT NULL,
+  `T_P_isolation` decimal(10,2) DEFAULT NULL,
+  `T_P_nocage` decimal(10,2) DEFAULT NULL,
+  `T_S_praise` decimal(10,2) DEFAULT NULL,
+  `T_S_understanding` decimal(10,2) DEFAULT NULL,
+  `T_S_listening` decimal(10,2) DEFAULT NULL,
+  `T_S_defense` decimal(10,2) DEFAULT NULL,
+  `T_S_help` decimal(10,2) DEFAULT NULL,
+  `T_S_isolation` decimal(10,2) DEFAULT NULL,
+  `T_S_nocage` decimal(10,2) DEFAULT NULL,
+  `CCG_F` decimal(10,2) DEFAULT NULL,
+  `T_CCG_F` decimal(10,2) DEFAULT NULL,
+  `CCS_F` decimal(10,2) DEFAULT NULL,
+  `T_CCS_F` decimal(10,2) DEFAULT NULL,
+  `ORAPREN` decimal(10,2) DEFAULT NULL,
+  `ORESUL` decimal(10,2) DEFAULT NULL,
+  `OREVIT` decimal(10,2) DEFAULT NULL,
+  `ORAPREN_F` decimal(10,2) DEFAULT NULL,
+  `ORESUL_F` decimal(10,2) DEFAULT NULL,
+  `OREVIT_F` decimal(10,2) DEFAULT NULL,
+  `T_ORAPREN_F` decimal(10,2) DEFAULT NULL,
+  `T_ORESUL_F` decimal(10,2) DEFAULT NULL,
+  `T_OREVIT_F` decimal(10,2) DEFAULT NULL,
+  `EXP_CONTROL_AL` decimal(10,2) DEFAULT NULL,
+  `EXP_EFICACIA_AL` decimal(10,2) DEFAULT NULL,
+  `EXP_CONTROL_F` decimal(10,2) DEFAULT NULL,
+  `EXP_EFICACIA_F` decimal(10,2) DEFAULT NULL,
+  `T_EXPCONTROL_F` decimal(10,2) DEFAULT NULL,
+  `T_EXPEFICACIA_F` decimal(10,2) DEFAULT NULL,
+  `Criterio_MOT` int DEFAULT NULL,
+  `Criterio_CDC` int DEFAULT NULL,
+  `Criterio_CEM` int DEFAULT NULL,
+  `ATCAMPRO` int DEFAULT NULL,
+  `T_Criterio_MOT` decimal(10,2) DEFAULT NULL,
+  `T_Criterio_CDC` decimal(10,2) DEFAULT NULL,
+  `T_Criterio_CEM` decimal(10,2) DEFAULT NULL,
+  `T_ATCAMPRO` decimal(10,2) DEFAULT NULL,
+  `claseProfesorAlumnoIdClase` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `claseProfesorAlumnoIdProfesor` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `claseProfesorAlumnoIdAlumno` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_c4c3b593624b72dfc2b89603f49` (`claseProfesorAlumnoIdClase`,`claseProfesorAlumnoIdProfesor`,`claseProfesorAlumnoIdAlumno`),
+  KEY `FK_f9538da727e0644bc3110ad39b3` (`id_centro`),
+  KEY `FK_fbc1c5093b6d81c8e8d1606ecae` (`curso_escolar_id`),
+  CONSTRAINT `FK_c4c3b593624b72dfc2b89603f49` FOREIGN KEY (`claseProfesorAlumnoIdClase`, `claseProfesorAlumnoIdProfesor`, `claseProfesorAlumnoIdAlumno`) REFERENCES `clase_profesor_alumno` (`id_clase`, `id_profesor`, `id_alumno`) ON DELETE CASCADE,
+  CONSTRAINT `FK_f9538da727e0644bc3110ad39b3` FOREIGN KEY (`id_centro`) REFERENCES `centro` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_fbc1c5093b6d81c8e8d1606ecae` FOREIGN KEY (`curso_escolar_id`) REFERENCES `curso_escolar` (`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cc`
+--
+
+LOCK TABLES `cc` WRITE;
+/*!40000 ALTER TABLE `cc` DISABLE KEYS */;
+INSERT INTO `cc` VALUES (1,'00000001',2024,'2025-06-20 15:18:00',5,2,4,1,3,5,2,4,3,2,5,1,4,2,3,4,5,2,3,1,4,5,2,3,4,1,3,5,2,4,1,2,5,3,1,4,2,3,4,5,1,2,3,4,5,2,1,3,2,5,4,1,3,2,5,4,4,5,2,3,1,4,2,5,3,1,4,2,3,1,5,4,3,4,5,1,2,3,4,5,1,2,2,3,4,1,5,2,4,3,1,5,2,3,4,1,5,2,4,3,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,3,4,5,1,2,3,4,5,1,2,3,4,1,3,2,4,5,1,5,4,3,2,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,4,4,3,5,3,1,4,2,4,3,5,4,4,1,4,1,3,2,1,5,4,5,2,3,5,3,1,1,2,4,2,5,1,4,3,5,1,3,2,1,2,4,2,4,1,3,5,2,3,3,5,2,4,8,7,9,7,6,9,7,9,6,5,4,9,8,8,5,2,7,6,6,4,8,6,4,6,7,11,7,5,7,8,7,7,6,8,11,12,12,8,11,8,12,7,9,109.00,42.75,-0.21,45.86,6.08,4.86,6.88,4.34,3.10,6.42,4.24,5.96,4.00,2.56,1.84,6.09,4.92,5.17,2.86,-0.98,9.00,9.00,10.00,9.00,8.00,30.00,17.00,0.46,0.26,68.43,52.53,22.00,25.00,47.00,-0.44,39.49,52.00,64.00,39.10,61.17,33.90,19.37,20.12,42.13,21.25,25.92,12.73,24.80,57.22,48.06,62.76,25.13,-0.73,35.48,-0.70,36.10,11.00,10.00,8.00,0.09,-0.53,0.06,51.84,39.31,51.13,13.00,12.00,-1.63,-0.69,17.48,36.27,47,28,13,88,33.22,50.80,52.06,40.06,'40101001','20010001','301010101'),(2,'00000001',2024,'2025-06-20 15:18:00',4,3,5,2,4,3,5,2,4,3,4,2,5,3,4,3,2,5,4,2,3,4,5,2,3,5,2,4,3,5,2,4,4,2,5,3,4,2,5,3,4,2,5,3,4,2,5,4,3,2,5,4,3,5,2,4,3,4,5,2,4,3,5,2,4,3,5,2,4,3,5,2,4,3,2,5,4,3,5,2,4,3,3,4,2,5,3,4,2,5,3,4,2,5,3,4,2,5,3,4,2,5,3,4,2,5,3,4,2,5,3,4,2,5,3,4,2,5,3,4,2,5,3,4,2,5,3,4,2,5,4,3,2,5,4,3,2,5,4,3,2,5,2,4,3,5,4,2,4,3,5,2,4,3,5,2,4,3,5,2,4,3,5,2,4,3,5,2,4,3,5,2,4,3,5,2,3,3,2,4,2,3,1,4,3,2,1,3,1,2,2,2,4,3,4,3,4,3,4,2,1,1,2,4,3,3,4,1,3,2,4,3,2,1,3,4,2,3,1,3,3,1,3,4,4,2,4,1,3,5,7,6,7,8,5,5,7,6,5,4,5,6,6,6,5,8,8,7,6,9,9,8,7,6,15,9,10,8,6,10,9,12,10,11,9,9,11,12,11,9,12,12,93.00,28.98,-0.50,39.90,3.28,4.86,3.62,4.34,4.99,2.25,2.19,4.02,4.00,2.56,1.84,2.13,3.06,3.19,3.69,2.08,11.00,9.00,12.00,10.00,11.00,31.00,21.00,0.80,0.71,84.49,69.16,30.00,32.00,62.00,0.49,61.73,64.00,71.00,32.69,92.42,47.60,56.27,28.09,29.63,44.69,41.02,57.01,39.67,57.22,24.81,39.13,47.95,-0.26,44.74,-0.58,38.49,9.00,12.00,11.00,-0.69,0.08,0.85,36.16,51.60,66.95,21.00,12.00,-0.07,-0.41,48.56,41.72,56,24,14,94,46.41,38.42,56.55,45.62,'40101001','20010001','301010102'),(5,'00000001',2026,'2025-11-13 16:47:11',6,3,4,2,5,7,5,7,8,2,4,3,5,4,7,5,6,4,6,6,7,8,4,5,5,3,5,6,5,5,4,3,4,7,3,5,4,7,4,5,4,6,5,3,4,3,4,3,2,5,4,1,3,2,5,4,6,7,4,3,3,2,4,3,6,4,3,5,3,1,5,4,3,4,5,1,2,3,4,5,1,2,2,3,4,1,5,2,4,3,1,5,2,3,4,1,5,2,4,3,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,3,4,5,1,2,3,4,5,1,2,3,4,1,3,2,4,5,1,5,4,3,2,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,1,3,-2,2,1,-1,1,-1,4,-1,3,2,2,-2,3,-1,3,4,3,2,1,5,2,3,5,3,1,1,2,4,2,5,1,4,3,5,1,3,2,1,2,4,2,4,1,3,5,2,3,3,5,2,4,8,2,8,6,9,8,7,7,4,8,3,9,11,3,4,2,9,7,5,2,8,5,9,8,7,11,7,5,7,8,7,7,6,8,11,12,12,8,11,8,12,7,9,99.00,34.14,-0.45,41.08,6.08,0.23,5.79,3.35,5.93,5.38,4.24,4.02,2.09,5.41,0.91,6.09,7.71,0.22,2.03,-0.98,14.00,16.00,13.00,14.00,11.00,44.00,25.00,1.50,1.03,117.84,81.07,22.00,31.00,53.00,0.06,51.34,52.00,64.00,39.10,61.17,33.90,19.37,20.12,42.13,21.25,25.92,12.73,24.80,57.22,48.06,62.76,25.13,-0.73,35.48,-0.70,36.10,11.00,10.00,8.00,0.09,-0.53,0.06,51.84,39.31,51.13,13.00,12.00,-1.63,-0.69,17.48,36.27,47,28,13,88,33.22,50.80,52.06,40.06,'40103001','20010003','301010301'),(6,'00000001',2026,'2025-11-13 16:48:25',6,3,4,2,5,7,5,7,8,2,4,3,5,4,7,5,6,4,6,6,7,8,4,5,5,3,5,6,5,5,4,3,4,7,3,5,4,7,4,5,4,6,5,3,4,3,4,3,2,5,4,1,3,2,5,4,6,7,4,3,3,2,4,3,6,4,3,5,3,1,5,4,3,4,5,1,2,3,4,5,1,2,2,3,4,1,5,2,4,3,1,5,2,3,4,1,5,2,4,3,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,3,4,5,1,2,3,4,5,1,2,3,4,1,3,2,4,5,1,5,4,3,2,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,1,3,-2,2,1,-1,1,-1,4,-1,3,2,2,-2,3,-1,3,4,3,2,1,5,2,3,5,3,1,1,2,4,2,5,1,4,3,5,1,3,2,1,2,4,2,4,1,3,5,2,3,3,5,2,4,8,2,8,6,9,8,7,7,4,8,3,9,11,3,4,2,9,7,5,2,8,5,9,8,7,11,7,5,7,8,7,7,6,8,11,12,12,8,11,8,12,7,9,99.00,34.14,-0.45,41.08,6.08,0.23,5.79,3.35,5.93,5.38,4.24,4.02,2.09,5.41,0.91,6.09,7.71,0.22,2.03,-0.98,14.00,16.00,13.00,14.00,11.00,44.00,25.00,1.50,1.03,117.84,81.07,22.00,31.00,53.00,0.06,51.34,52.00,64.00,39.10,61.17,33.90,19.37,20.12,42.13,21.25,25.92,12.73,24.80,57.22,48.06,62.76,25.13,-0.73,35.48,-0.70,36.10,11.00,10.00,8.00,0.09,-0.53,0.06,51.84,39.31,51.13,13.00,12.00,-1.63,-0.69,17.48,36.27,47,28,13,88,33.22,50.80,52.06,40.06,'40103001','20010003','301010302'),(7,'00000001',2026,'2025-11-13 16:50:17',6,3,4,2,5,7,5,7,8,2,4,3,5,4,7,5,6,4,6,6,7,8,4,5,5,3,5,6,5,5,4,3,4,7,3,5,4,7,4,5,4,6,5,3,4,3,4,3,2,5,4,1,3,2,5,4,6,7,4,3,3,2,4,3,6,4,3,5,3,1,5,4,3,4,5,1,2,3,4,5,1,2,2,3,4,1,5,2,4,3,1,5,2,3,4,1,5,2,4,3,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,3,4,5,1,2,3,4,5,1,2,3,4,1,3,2,4,5,1,5,4,3,2,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,1,3,-2,2,1,-1,1,-1,4,-1,3,2,2,-2,3,-1,3,4,3,2,1,5,2,3,5,3,1,1,2,4,2,5,1,4,3,5,1,3,2,1,2,4,2,4,1,3,5,2,3,3,5,2,4,8,2,8,6,9,8,7,7,4,8,3,9,11,3,4,2,9,7,5,2,8,5,9,8,7,11,7,5,7,8,7,7,6,8,11,12,12,8,11,8,12,7,9,99.00,34.14,-0.45,41.08,6.08,0.23,5.79,3.35,5.93,5.38,4.24,4.02,2.09,5.41,0.91,6.09,7.71,0.22,2.03,-0.98,14.00,16.00,13.00,14.00,11.00,44.00,25.00,1.50,1.03,117.84,81.07,22.00,31.00,53.00,0.06,51.34,52.00,64.00,39.10,61.17,33.90,19.37,20.12,42.13,21.25,25.92,12.73,24.80,57.22,48.06,62.76,25.13,-0.73,35.48,-0.70,36.10,11.00,10.00,8.00,0.09,-0.53,0.06,51.84,39.31,51.13,13.00,12.00,-1.63,-0.69,17.48,36.27,47,28,13,88,33.22,50.80,52.06,40.06,'40104001','20010004','301010401'),(8,'00000001',2026,'2025-11-13 16:51:06',6,3,4,2,5,7,5,7,8,2,4,3,5,4,7,5,6,4,6,6,7,8,4,5,5,3,5,6,5,5,4,3,4,7,3,5,4,7,4,5,4,6,5,3,4,3,4,3,2,5,4,1,3,2,5,4,6,7,4,3,3,2,4,3,6,4,3,5,3,1,5,4,3,4,5,1,2,3,4,5,1,2,2,3,4,1,5,2,4,3,1,5,2,3,4,1,5,2,4,3,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,3,4,5,1,2,3,4,5,1,2,3,4,1,3,2,4,5,1,5,4,3,2,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,1,3,-2,2,1,-1,1,-1,4,-1,3,2,2,-2,3,-1,3,4,3,2,1,5,2,3,5,3,1,1,2,4,2,5,1,4,3,5,1,3,2,1,2,4,2,4,1,3,5,2,3,3,5,2,4,8,2,8,6,9,8,7,7,4,8,3,9,11,3,4,2,9,7,5,2,8,5,9,8,7,11,7,5,7,8,7,7,6,8,11,12,12,8,11,8,12,7,9,99.00,34.14,-0.45,41.08,6.08,0.23,5.79,3.35,5.93,5.38,4.24,4.02,2.09,5.41,0.91,6.09,7.71,0.22,2.03,-0.98,14.00,16.00,13.00,14.00,11.00,44.00,25.00,1.50,1.03,117.84,81.07,22.00,31.00,53.00,0.06,51.34,52.00,64.00,39.10,61.17,33.90,19.37,20.12,42.13,21.25,25.92,12.73,24.80,57.22,48.06,62.76,25.13,-0.73,35.48,-0.70,36.10,11.00,10.00,8.00,0.09,-0.53,0.06,51.84,39.31,51.13,13.00,12.00,-1.63,-0.69,17.48,36.27,47,28,13,88,33.22,50.80,52.06,40.06,'40104001','20010004','301010402'),(9,'00000001',2026,'2025-11-13 16:52:18',6,3,4,2,5,7,5,7,8,2,4,3,5,4,7,5,6,4,6,6,7,8,4,5,5,3,5,6,5,5,4,3,4,7,3,5,4,7,4,5,4,6,5,3,4,3,4,3,2,5,4,1,3,2,5,4,6,7,4,3,3,2,4,3,6,4,3,5,3,1,5,4,3,4,5,1,2,3,4,5,1,2,2,3,4,1,5,2,4,3,1,5,2,3,4,1,5,2,4,3,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,3,4,5,1,2,3,4,5,1,2,3,4,1,3,2,4,5,1,5,4,3,2,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,1,3,-2,2,1,-1,1,-1,4,-1,3,2,2,-2,3,-1,3,4,3,2,1,5,2,3,5,3,1,1,2,4,2,5,1,4,3,5,1,3,2,1,2,4,2,4,1,3,5,2,3,3,5,2,4,8,2,8,6,9,8,7,7,4,8,3,9,11,3,4,2,9,7,5,2,8,5,9,8,7,11,7,5,7,8,7,7,6,8,11,12,12,8,11,8,12,7,9,99.00,34.14,-0.45,41.08,6.08,0.23,5.79,3.35,5.93,5.38,4.24,4.02,2.09,5.41,0.91,6.09,7.71,0.22,2.03,-0.98,14.00,16.00,13.00,14.00,11.00,44.00,25.00,1.50,1.03,117.84,81.07,22.00,31.00,53.00,0.06,51.34,52.00,64.00,39.10,61.17,33.90,19.37,20.12,42.13,21.25,25.92,12.73,24.80,57.22,48.06,62.76,25.13,-0.73,35.48,-0.70,36.10,11.00,10.00,8.00,0.09,-0.53,0.06,51.84,39.31,51.13,13.00,12.00,-1.63,-0.69,17.48,36.27,47,28,13,88,33.22,50.80,52.06,40.06,'40102001','20010002','301010201'),(10,'00000001',2026,'2025-11-13 16:53:41',6,3,4,2,5,7,5,7,8,2,4,3,5,4,7,5,6,4,6,6,7,8,4,5,5,3,5,6,5,5,4,3,4,7,3,5,4,7,4,5,4,6,5,3,4,3,4,3,2,5,4,1,3,2,5,4,6,7,4,3,3,2,4,3,6,4,3,5,3,1,5,4,3,4,5,1,2,3,4,5,1,2,2,3,4,1,5,2,4,3,1,5,2,3,4,1,5,2,4,3,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,3,4,5,1,2,3,4,5,1,2,3,4,1,3,2,4,5,1,5,4,3,2,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,1,3,-2,2,1,-1,1,-1,4,-1,3,2,2,-2,3,-1,3,4,3,2,1,5,2,3,5,3,1,1,2,4,2,5,1,4,3,5,1,3,2,1,2,4,2,4,1,3,5,2,3,3,5,2,4,8,2,8,6,9,8,7,7,4,8,3,9,11,3,4,2,9,7,5,2,8,5,9,8,7,11,7,5,7,8,7,7,6,8,11,12,12,8,11,8,12,7,9,99.00,34.14,-0.45,41.08,6.08,0.23,5.79,3.35,5.93,5.38,4.24,4.02,2.09,5.41,0.91,6.09,7.71,0.22,2.03,-0.98,14.00,16.00,13.00,14.00,11.00,44.00,25.00,1.50,1.03,117.84,81.07,22.00,31.00,53.00,0.06,51.34,52.00,64.00,39.10,61.17,33.90,19.37,20.12,42.13,21.25,25.92,12.73,24.80,57.22,48.06,62.76,25.13,-0.73,35.48,-0.70,36.10,11.00,10.00,8.00,0.09,-0.53,0.06,51.84,39.31,51.13,13.00,12.00,-1.63,-0.69,17.48,36.27,47,28,13,88,33.22,50.80,52.06,40.06,'40102001','20010002','301010202'),(11,'00000001',2026,'2025-11-13 17:05:56',6,3,4,2,5,7,5,7,8,2,4,3,5,4,7,5,6,4,6,6,7,8,4,5,5,3,5,6,5,5,4,3,4,7,3,5,4,7,4,5,4,6,5,3,4,3,4,3,2,5,4,1,3,2,5,4,6,7,4,3,3,2,4,3,6,4,3,5,3,1,5,4,3,4,5,1,2,3,4,5,1,2,2,3,4,1,5,2,4,3,1,5,2,3,4,1,5,2,4,3,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,3,4,5,1,2,3,4,5,1,2,3,4,1,3,2,4,5,1,5,4,3,2,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,1,3,-2,2,1,-1,1,-1,4,-1,3,2,2,-2,3,-1,3,4,3,2,1,5,2,3,5,3,1,1,2,4,2,5,1,4,3,5,1,3,2,1,2,4,2,4,1,3,5,2,3,3,5,2,4,8,2,8,6,9,8,7,7,4,8,3,9,11,3,4,2,9,7,5,2,8,5,9,8,7,11,7,5,7,8,7,7,6,8,11,12,12,8,11,8,12,7,9,99.00,34.14,-0.45,41.08,6.08,0.23,5.79,3.35,5.93,5.38,4.24,4.02,2.09,5.41,0.91,6.09,7.71,0.22,2.03,-0.98,14.00,16.00,13.00,14.00,11.00,44.00,25.00,1.50,1.03,117.84,81.07,22.00,31.00,53.00,0.06,51.34,52.00,64.00,39.10,61.17,33.90,19.37,20.12,42.13,21.25,25.92,12.73,24.80,57.22,48.06,62.76,25.13,-0.73,35.48,-0.70,36.10,11.00,10.00,8.00,0.09,-0.53,0.06,51.84,39.31,51.13,13.00,12.00,-1.63,-0.69,17.48,36.27,47,28,13,88,33.22,50.80,52.06,40.06,'40102002','20010002','301020201'),(12,'00000001',2026,'2025-11-13 17:06:45',6,3,4,2,5,7,5,7,8,2,4,3,5,4,7,5,6,4,6,6,7,8,4,5,5,3,5,6,5,5,4,3,4,7,3,5,4,7,4,5,4,6,5,3,4,3,4,3,2,5,4,1,3,2,5,4,6,7,4,3,3,2,4,3,6,4,3,5,3,1,5,4,3,4,5,1,2,3,4,5,1,2,2,3,4,1,5,2,4,3,1,5,2,3,4,1,5,2,4,3,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,1,5,2,3,4,3,4,5,1,2,3,4,5,1,2,3,4,1,3,2,4,5,1,5,4,3,2,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,1,3,-2,2,1,-1,1,-1,4,-1,3,2,2,-2,3,-1,3,4,3,2,1,5,2,3,5,3,1,1,2,4,2,5,1,4,3,5,1,3,2,1,2,4,2,4,1,3,5,2,3,3,5,2,4,8,2,8,6,9,8,7,7,4,8,3,9,11,3,4,2,9,7,5,2,8,5,9,8,7,11,7,5,7,8,7,7,6,8,11,12,12,8,11,8,12,7,9,99.00,34.14,-0.45,41.08,6.08,0.23,5.79,3.35,5.93,5.38,4.24,4.02,2.09,5.41,0.91,6.09,7.71,0.22,2.03,-0.98,14.00,16.00,13.00,14.00,11.00,44.00,25.00,1.50,1.03,117.84,81.07,22.00,31.00,53.00,0.06,51.34,52.00,64.00,39.10,61.17,33.90,19.37,20.12,42.13,21.25,25.92,12.73,24.80,57.22,48.06,62.76,25.13,-0.73,35.48,-0.70,36.10,11.00,10.00,8.00,0.09,-0.53,0.06,51.84,39.31,51.13,13.00,12.00,-1.63,-0.69,17.48,36.27,47,28,13,88,33.22,50.80,52.06,40.06,'40102002','20010002','301020202'),(13,'00000001',2026,'2025-11-13 18:06:27',4,5,3,4,5,4,5,4,5,5,4,5,5,5,5,3,4,5,5,4,5,4,5,4,5,4,5,5,4,5,4,4,5,5,3,4,5,4,5,4,5,3,4,5,5,4,5,4,2,4,4,4,5,3,5,4,2,3,4,4,5,4,4,5,5,5,5,4,5,5,4,5,4,3,4,3,2,2,4,5,4,4,3,4,4,4,4,5,5,4,5,5,4,5,4,5,5,4,5,3,5,4,3,2,3,4,4,5,4,2,5,5,3,1,5,5,5,5,5,4,5,4,5,5,5,5,5,5,4,5,3,4,5,5,5,5,5,5,5,5,5,5,5,5,4,5,5,4,5,5,4,5,5,5,5,4,5,4,5,5,4,5,4,5,4,5,4,5,5,5,5,4,5,5,5,4,2,1,1,2,1,2,1,2,1,1,2,1,1,2,2,3,2,2,1,1,2,1,1,2,2,2,1,1,1,3,3,2,2,1,2,1,1,5,1,1,2,1,1,1,1,2,2,2,1,2,1,1,1,7,4,7,6,8,6,6,6,6,5,7,5,6,5,6,7,5,7,6,8,6,6,6,3,13,9,9,8,8,14,12,9,14,7,8,6,11,10,11,11,11,11,13,97.00,32.42,-0.40,41.96,5.15,2.08,4.71,3.35,4.99,3.29,3.22,3.05,4.00,2.56,4.63,2.13,3.06,2.20,3.69,4.12,13.00,13.00,14.00,12.00,14.00,39.00,26.00,1.32,1.10,109.47,83.65,24.00,23.00,47.00,-0.42,39.92,73.00,65.00,77.56,45.55,47.60,41.51,28.09,79.63,60.31,41.02,71.77,17.36,36.60,1.55,54.88,40.34,0.26,55.23,-1.10,27.91,14.00,10.00,11.00,0.91,-0.53,0.87,68.23,39.31,67.45,18.00,13.00,-0.65,-0.03,36.91,49.49,57,24,18,99,47.88,38.42,74.48,50.25,'40102001','20010002','301010205');
+/*!40000 ALTER TABLE `cc` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ce`
+--
+
+DROP TABLE IF EXISTS `ce`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ce` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_profesor` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_centro` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `curso_escolar_id` year NOT NULL,
+  `fecha_registro` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `D1_LID1` int DEFAULT NULL,
+  `D9_SO4` int DEFAULT NULL,
+  `D2_GE1` int DEFAULT NULL,
+  `D9_SO2` int DEFAULT NULL,
+  `D2_GE3` int DEFAULT NULL,
+  `D8_AP4` int DEFAULT NULL,
+  `D6_APD1` int DEFAULT NULL,
+  `D5_INT2` int DEFAULT NULL,
+  `D7_TC1` int DEFAULT NULL,
+  `D4_EE2` int DEFAULT NULL,
+  `D8_AP1` int DEFAULT NULL,
+  `D3_COM2` int DEFAULT NULL,
+  `D8_AP3` int DEFAULT NULL,
+  `D2_GE4` int DEFAULT NULL,
+  `D9_SO1` int DEFAULT NULL,
+  `D2_GE2` int DEFAULT NULL,
+  `D9_SO3` int DEFAULT NULL,
+  `D1_LID2` int DEFAULT NULL,
+  `D3_COM1` int DEFAULT NULL,
+  `D8_AP2` int DEFAULT NULL,
+  `D4_EE1` int DEFAULT NULL,
+  `D7_TC2` int DEFAULT NULL,
+  `D5_INT1` int DEFAULT NULL,
+  `D6_APD2` int DEFAULT NULL,
+  `P1_EJP1` int DEFAULT NULL,
+  `P3_ASO4` int DEFAULT NULL,
+  `P1_EJP3` int DEFAULT NULL,
+  `P2_AAP1` int DEFAULT NULL,
+  `P2_AAP3` int DEFAULT NULL,
+  `P3_ASO1` int DEFAULT NULL,
+  `P3_ASO3` int DEFAULT NULL,
+  `P1_EJP2` int DEFAULT NULL,
+  `P1_EJP4` int DEFAULT NULL,
+  `P2_AAP2` int DEFAULT NULL,
+  `P3_ASO2` int DEFAULT NULL,
+  `P2_AAP4` int DEFAULT NULL,
+  `A1_CF1` int DEFAULT NULL,
+  `A7_ASR2` int DEFAULT NULL,
+  `A2_INT1` int DEFAULT NULL,
+  `A6_DIS2` int DEFAULT NULL,
+  `A3_ESF1` int DEFAULT NULL,
+  `A5_COP2` int DEFAULT NULL,
+  `A4_COA1` int DEFAULT NULL,
+  `A1_CF2` int DEFAULT NULL,
+  `A5_COP1` int DEFAULT NULL,
+  `A4_COA2` int DEFAULT NULL,
+  `A6_DIS1` int DEFAULT NULL,
+  `A2_INT2` int DEFAULT NULL,
+  `A7_ASR1` int DEFAULT NULL,
+  `A3_ESF2` int DEFAULT NULL,
+  `F1_COP1` int DEFAULT NULL,
+  `F2_RES1` int DEFAULT NULL,
+  `F4_INT2` int DEFAULT NULL,
+  `F3_CON2` int DEFAULT NULL,
+  `F1_COP2` int DEFAULT NULL,
+  `F2_RES2` int DEFAULT NULL,
+  `F4_INT1` int DEFAULT NULL,
+  `F3_CON1` int DEFAULT NULL,
+  `CRD1` int DEFAULT NULL,
+  `CRSS1` int DEFAULT NULL,
+  `CRP1` int DEFAULT NULL,
+  `CRA1` int DEFAULT NULL,
+  `CRR1` int DEFAULT NULL,
+  `CRF1` int DEFAULT NULL,
+  `CRCC1` int DEFAULT NULL,
+  `CRD2` int DEFAULT NULL,
+  `CRP2` int DEFAULT NULL,
+  `CRA2` int DEFAULT NULL,
+  `CRF2` int DEFAULT NULL,
+  `CRCC2` int DEFAULT NULL,
+  `CRR2` int DEFAULT NULL,
+  `CRSS2` int DEFAULT NULL,
+  `D9_SO4X` int DEFAULT NULL,
+  `D9_SO2X` int DEFAULT NULL,
+  `D8_AP4X` int DEFAULT NULL,
+  `D5_INT2X` int DEFAULT NULL,
+  `D4_EE2X` int DEFAULT NULL,
+  `D3_COM2X` int DEFAULT NULL,
+  `D2_GE4X` int DEFAULT NULL,
+  `D2_GE2X` int DEFAULT NULL,
+  `D1_LID2X` int DEFAULT NULL,
+  `D8_AP2X` int DEFAULT NULL,
+  `D7_TC2X` int DEFAULT NULL,
+  `D6_APD2X` int DEFAULT NULL,
+  `P3_ASO4X` int DEFAULT NULL,
+  `P1_EJP2X` int DEFAULT NULL,
+  `P1_EJP4X` int DEFAULT NULL,
+  `P2_AAP2X` int DEFAULT NULL,
+  `P3_ASO2X` int DEFAULT NULL,
+  `P2_AAP4X` int DEFAULT NULL,
+  `A7_ASR2X` int DEFAULT NULL,
+  `A6_DIS2X` int DEFAULT NULL,
+  `A5_COP2X` int DEFAULT NULL,
+  `A1_CF2X` int DEFAULT NULL,
+  `A4_COA2X` int DEFAULT NULL,
+  `A2_INT2X` int DEFAULT NULL,
+  `A3_ESF2X` int DEFAULT NULL,
+  `F4_INT2X` int DEFAULT NULL,
+  `F1_COP2X` int DEFAULT NULL,
+  `F2_RES2X` int DEFAULT NULL,
+  `F3_CON2X` int DEFAULT NULL,
+  `SEGACOAL1X` int DEFAULT NULL,
+  `SEGPCON1X` int DEFAULT NULL,
+  `SEGACOAL2X` int DEFAULT NULL,
+  `SEGPCON2X` int DEFAULT NULL,
+  `SEGACOAL3X` int DEFAULT NULL,
+  `SEGPCON3X` int DEFAULT NULL,
+  `D_LID` int DEFAULT NULL,
+  `D_GE` int DEFAULT NULL,
+  `D_COM` int DEFAULT NULL,
+  `D_EE` int DEFAULT NULL,
+  `D_INT` int DEFAULT NULL,
+  `D_APD` int DEFAULT NULL,
+  `D_TC` int DEFAULT NULL,
+  `D_AP` int DEFAULT NULL,
+  `D_SO` int DEFAULT NULL,
+  `P_EJP21` int DEFAULT NULL,
+  `P_EJP22` int DEFAULT NULL,
+  `P_AAP21` int DEFAULT NULL,
+  `P_AAP22` int DEFAULT NULL,
+  `P_ASO21` int DEFAULT NULL,
+  `P_ASO22` int DEFAULT NULL,
+  `A_CF` int DEFAULT NULL,
+  `A_COP` int DEFAULT NULL,
+  `A_DIS` int DEFAULT NULL,
+  `A_ASR` int DEFAULT NULL,
+  `A_INT` int DEFAULT NULL,
+  `A_ESF` int DEFAULT NULL,
+  `A_COA` int DEFAULT NULL,
+  `F_COP` int DEFAULT NULL,
+  `F_RES` int DEFAULT NULL,
+  `F_CON` int DEFAULT NULL,
+  `F_INT` int DEFAULT NULL,
+  `P_CMR` int DEFAULT NULL,
+  `P_CMA` int DEFAULT NULL,
+  `SEGNoViol` int DEFAULT NULL,
+  `SEGNoAcoso` int DEFAULT NULL,
+  `SEGProfesorado` int DEFAULT NULL,
+  `SEGNoProbCond` int DEFAULT NULL,
+  `CRD` int DEFAULT NULL,
+  `CRP` int DEFAULT NULL,
+  `CRA` int DEFAULT NULL,
+  `CRF` int DEFAULT NULL,
+  `CRCC` int DEFAULT NULL,
+  `CRR` int DEFAULT NULL,
+  `CRSS` int DEFAULT NULL,
+  `DIRTot` decimal(10,2) DEFAULT NULL,
+  `DIRComPart` decimal(10,2) DEFAULT NULL,
+  `DIRGestion` decimal(10,2) DEFAULT NULL,
+  `PROF_Ptot` decimal(10,2) DEFAULT NULL,
+  `P_EJP` decimal(10,2) DEFAULT NULL,
+  `P_AAP` decimal(10,2) DEFAULT NULL,
+  `P_ASO` decimal(10,2) DEFAULT NULL,
+  `ALUM_TOT` decimal(10,2) DEFAULT NULL,
+  `ALUMConfianza` decimal(10,2) DEFAULT NULL,
+  `ALUMCooper` decimal(10,2) DEFAULT NULL,
+  `ALUMDis` decimal(10,2) DEFAULT NULL,
+  `ALUMMot` decimal(10,2) DEFAULT NULL,
+  `FAMcol_TOT` decimal(10,2) DEFAULT NULL,
+  `ClimSEG` decimal(10,2) DEFAULT NULL,
+  `EntornoFIS` decimal(10,2) DEFAULT NULL,
+  `SATCENTRO_DIR_PROF` decimal(10,2) DEFAULT NULL,
+  `SATCENTRO_DIR_PROF_AL` decimal(10,2) DEFAULT NULL,
+  `SAT_AL_FAM` decimal(10,2) DEFAULT NULL,
+  `SATTOT` decimal(10,2) DEFAULT NULL,
+  `T_PROF_Ptot` decimal(10,2) DEFAULT NULL,
+  `T_P_EJP` decimal(10,2) DEFAULT NULL,
+  `T_P_AAP` decimal(10,2) DEFAULT NULL,
+  `T_P_ASO` decimal(10,2) DEFAULT NULL,
+  `T_ALUM_TOT` decimal(10,2) DEFAULT NULL,
+  `T_ALUMConfianza` decimal(10,2) DEFAULT NULL,
+  `T_ALUMCooper` decimal(10,2) DEFAULT NULL,
+  `T_ALUMDis` decimal(10,2) DEFAULT NULL,
+  `T_ALUMMot` decimal(10,2) DEFAULT NULL,
+  `T_FAMcol_TOT` decimal(10,2) DEFAULT NULL,
+  `CESTot` decimal(10,2) DEFAULT NULL,
+  `T_CESTot` decimal(10,2) DEFAULT NULL,
+  `T_DIRTot` decimal(10,2) DEFAULT NULL,
+  `T_DIRComPart` decimal(10,2) DEFAULT NULL,
+  `T_DIRGestion` decimal(10,2) DEFAULT NULL,
+  `T_D_AP` decimal(10,2) DEFAULT NULL,
+  `T_P_Ormot_Apr` decimal(10,2) DEFAULT NULL,
+  `T_P_Ormot_Res` decimal(10,2) DEFAULT NULL,
+  `T_SEGNoViol` decimal(10,2) DEFAULT NULL,
+  `T_SEGNoAcoso` decimal(10,2) DEFAULT NULL,
+  `T_SEGProfesorado` decimal(10,2) DEFAULT NULL,
+  `T_SEGNoProbCond` decimal(10,2) DEFAULT NULL,
+  `T_ClimSEG` decimal(10,2) DEFAULT NULL,
+  `T_EntornoFIS` decimal(10,2) DEFAULT NULL,
+  `T_SATTOT` decimal(10,2) DEFAULT NULL,
+  `T_SATCENTRO_DIR_PROF` decimal(10,2) DEFAULT NULL,
+  `T_SAT_AL_FAM` decimal(10,2) DEFAULT NULL,
+  `T_SATCENTRO_DIR_PROF_AL` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_ffac3aca0d92142230fef3caedb` (`id_profesor`),
+  KEY `FK_a7b99aa59f8a05e3122333c4cde` (`id_centro`),
+  KEY `FK_f10cb20388ddc9f99f332b04207` (`curso_escolar_id`),
+  CONSTRAINT `FK_a7b99aa59f8a05e3122333c4cde` FOREIGN KEY (`id_centro`) REFERENCES `centro` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_f10cb20388ddc9f99f332b04207` FOREIGN KEY (`curso_escolar_id`) REFERENCES `curso_escolar` (`id`),
+  CONSTRAINT `FK_ffac3aca0d92142230fef3caedb` FOREIGN KEY (`id_profesor`) REFERENCES `profesor` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ce`
+--
+
+LOCK TABLES `ce` WRITE;
+/*!40000 ALTER TABLE `ce` DISABLE KEYS */;
+INSERT INTO `ce` VALUES (1,'20010001','00000001',2024,'2025-06-20 15:18:00',5,4,5,1,5,2,5,1,4,1,4,1,4,1,5,1,5,4,5,2,5,2,5,1,4,3,4,4,4,1,5,2,1,4,3,2,5,2,5,4,4,1,4,2,5,2,2,2,3,4,5,5,2,1,2,1,5,5,5,5,4,5,4,5,5,5,5,5,5,5,5,5,2,5,4,5,5,5,5,5,2,4,4,5,3,4,5,2,3,4,4,2,5,4,4,4,2,4,4,5,5,2,5,5,5,1,5,7,20,10,10,10,10,8,16,17,8,9,6,8,4,8,9,10,4,7,9,6,8,9,10,10,9,12,16,14,8,13,15,10,9,10,10,10,9,10,108.00,37.00,55.00,43.00,17.00,14.00,12.00,53.00,16.00,18.00,4.00,15.00,38.00,50.00,15.00,48.00,58.00,20.00,68.00,48.42,62.92,44.33,40.74,57.21,51.15,67.76,28.60,66.20,89.38,270.00,71.09,76.99,72.68,78.24,67.11,56.10,54.97,69.01,30.46,57.52,74.17,60.01,83.42,81.67,77.24,81.59,78.85),(6,'20010002','00000001',2026,'2025-11-13 16:55:40',5,4,5,1,5,2,5,1,4,1,4,1,4,1,5,1,5,4,5,2,5,2,5,1,4,3,4,4,4,1,5,2,1,4,3,2,5,2,5,4,4,1,4,2,5,2,2,2,3,4,5,5,2,1,2,1,5,5,5,5,4,5,4,5,5,5,5,5,5,5,5,5,2,5,4,5,5,5,5,5,2,4,4,5,3,4,5,2,3,4,4,2,5,4,4,4,2,4,4,5,5,2,5,5,5,1,5,7,20,10,10,10,10,8,16,17,8,9,6,8,4,8,9,10,4,7,9,6,8,9,10,10,9,12,16,14,8,13,15,10,9,10,10,10,9,10,108.00,37.00,55.00,43.00,17.00,14.00,12.00,53.00,16.00,18.00,4.00,15.00,38.00,50.00,15.00,48.00,58.00,20.00,68.00,48.42,62.92,44.33,40.74,57.21,51.15,67.76,28.60,66.20,89.38,270.00,71.09,76.99,72.68,78.24,67.11,56.10,54.97,69.01,30.46,57.52,74.17,60.01,83.42,81.67,77.24,81.59,78.85),(7,'20010004','00000001',2026,'2025-11-13 16:56:29',5,4,5,1,5,2,5,1,4,1,4,1,4,1,5,1,5,4,5,2,5,2,5,1,4,3,4,4,4,1,5,2,1,4,3,2,5,2,5,4,4,1,4,2,5,2,2,2,3,4,5,5,2,1,2,1,5,5,5,5,4,5,4,5,5,5,5,5,5,5,5,5,2,5,4,5,5,5,5,5,2,4,4,5,3,4,5,2,3,4,4,2,5,4,4,4,2,4,4,5,5,2,5,5,5,1,5,7,20,10,10,10,10,8,16,17,8,9,6,8,4,8,9,10,4,7,9,6,8,9,10,10,9,12,16,14,8,13,15,10,9,10,10,10,9,10,108.00,37.00,55.00,43.00,17.00,14.00,12.00,53.00,16.00,18.00,4.00,15.00,38.00,50.00,15.00,48.00,58.00,20.00,68.00,48.42,62.92,44.33,40.74,57.21,51.15,67.76,28.60,66.20,89.38,270.00,71.09,76.99,72.68,78.24,67.11,56.10,54.97,69.01,30.46,57.52,74.17,60.01,83.42,81.67,77.24,81.59,78.85),(8,'20010003','00000001',2026,'2025-11-13 16:57:27',5,4,5,1,5,2,5,1,4,1,4,1,4,1,5,1,5,4,5,2,5,2,5,1,4,3,4,4,4,1,5,2,1,4,3,2,5,2,5,4,4,1,4,2,5,2,2,2,3,4,5,5,2,1,2,1,5,5,5,5,4,5,4,5,5,5,5,5,5,5,5,5,2,5,4,5,5,5,5,5,2,4,4,5,3,4,5,2,3,4,4,2,5,4,4,4,2,4,4,5,5,2,5,5,5,1,5,7,20,10,10,10,10,8,16,17,8,9,6,8,4,8,9,10,4,7,9,6,8,9,10,10,9,12,16,14,8,13,15,10,9,10,10,10,9,10,108.00,37.00,55.00,43.00,17.00,14.00,12.00,53.00,16.00,18.00,4.00,15.00,38.00,50.00,15.00,48.00,58.00,20.00,68.00,48.42,62.92,44.33,40.74,57.21,51.15,67.76,28.60,66.20,89.38,270.00,71.09,76.99,72.68,78.24,67.11,56.10,54.97,69.01,30.46,57.52,74.17,60.01,83.42,81.67,77.24,81.59,78.85);
+/*!40000 ALTER TABLE `ce` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `centro`
+--
+
+DROP TABLE IF EXISTS `centro`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `centro` (
+  `id` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo_publico` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo_centro` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `calle` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `numero` int NOT NULL,
+  `poblacion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `provincia` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pais` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cod_postal` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha_creacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_actualizacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IDX_ed0cf6cc4435fbb29eac92a789` (`codigo_publico`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `centro`
+--
+
+LOCK TABLES `centro` WRITE;
+/*!40000 ALTER TABLE `centro` DISABLE KEYS */;
+INSERT INTO `centro` VALUES ('00000001','B2YAV8PZ','IES Velázquez','Privado','Calle Sola',1,'Rota','Sevilla','España','41001','2025-06-20 15:18:00','2025-10-29 11:00:50'),('00000002','9P9N2Z3J','IES Galileo','Privado','Avda. Ciencia',1,'Granada','Granada','España','18015','2025-06-20 15:18:00','2025-10-21 16:49:08'),('00000003','8QRF5Y3H','Prueb','Prueb','Prueb',1,'Prueb','Prueb','España','11130','2025-10-20 17:05:10','2025-10-20 17:05:10'),('00000004','JLLM974X','IES Prueba 2','Instituto de Educación Secundaria','Avenida del Prado',25,'Granada','Granada','España','18009','2025-10-23 18:10:48','2025-10-23 18:10:48');
+/*!40000 ALTER TABLE `centro` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `clase`
+--
+
+DROP TABLE IF EXISTS `clase`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `clase` (
+  `id` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo_publico` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_centro` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `curso` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `curso_escolar_id` year NOT NULL,
+  `fecha_creacion` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_actualizacion` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IDX_e02dfe3a5985382420ac79a193` (`codigo_publico`),
+  KEY `FK_da9f22e7ab467044c6c870adf96` (`id_centro`),
+  KEY `FK_e2a993347ee0bfc37386c9e0022` (`curso_escolar_id`),
+  CONSTRAINT `FK_da9f22e7ab467044c6c870adf96` FOREIGN KEY (`id_centro`) REFERENCES `centro` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_e2a993347ee0bfc37386c9e0022` FOREIGN KEY (`curso_escolar_id`) REFERENCES `curso_escolar` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `clase`
+--
+
+LOCK TABLES `clase` WRITE;
+/*!40000 ALTER TABLE `clase` DISABLE KEYS */;
+INSERT INTO `clase` VALUES ('40101001','46VM49JJ','00000001','3º ESO L',2024,'2025-10-07 10:41:36','2025-10-29 09:57:40'),('40101002','LYMG4EYQ','00000001','3º ESO C',2024,'2025-10-07 10:42:08','2025-10-07 10:42:08'),('40101003','5EFELURL','00000001','2 ESO D',2024,'2025-10-27 13:40:16','2025-10-27 13:40:16'),('40102001','XKSU8FCJ','00000001','1 Eso A',2026,'2025-06-23 08:48:34','2025-11-13 08:11:48'),('40102002','9HUKDMTF','00000001','2 Eso A',2026,'2025-07-07 13:57:45','2025-11-13 16:03:53'),('40103001','HJ8SX2WJ','00000001','1 Eso B',2026,'2025-11-13 14:59:22','2025-11-13 14:59:22'),('40104001','349KZGW2','00000001','1 Eso C',2026,'2025-11-13 15:01:14','2025-11-13 15:01:14'),('40202001','EDJSNUA3','00000002','1º ESO D',2024,'2025-06-20 13:18:00','2025-07-07 09:45:47'),('40202002','V9LNZ549','00000002','3º ESO D',2024,'2025-07-07 09:19:32','2025-07-07 09:19:32'),('40202003','GP6KRBCR','00000002','1º ESO C',2024,'2025-07-07 09:25:24','2025-07-07 09:25:24'),('40202004','FH3FK45G','00000002','4º ESO A',2024,'2025-07-07 09:43:39','2025-07-07 09:44:13'),('40202005','H948WB2C','00000002','1º ESO A',2024,'2025-07-08 07:56:18','2025-07-08 07:56:18');
+/*!40000 ALTER TABLE `clase` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `clase_profesor`
+--
+
+DROP TABLE IF EXISTS `clase_profesor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `clase_profesor` (
+  `id_clase` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_profesor` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id_clase`,`id_profesor`),
+  KEY `FK_8626104bb91e6a7ec81c797a660` (`id_profesor`),
+  CONSTRAINT `FK_8626104bb91e6a7ec81c797a660` FOREIGN KEY (`id_profesor`) REFERENCES `profesor` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_9ab48b9d973e6d30b0c35c13154` FOREIGN KEY (`id_clase`) REFERENCES `clase` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `clase_profesor`
+--
+
+LOCK TABLES `clase_profesor` WRITE;
+/*!40000 ALTER TABLE `clase_profesor` DISABLE KEYS */;
+INSERT INTO `clase_profesor` VALUES ('40101001','20010001'),('40101002','20010001'),('40101003','20010001'),('40102001','20010002'),('40102002','20010002'),('40103001','20010003'),('40104001','20010004');
+/*!40000 ALTER TABLE `clase_profesor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `clase_profesor_alumno`
+--
+
+DROP TABLE IF EXISTS `clase_profesor_alumno`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `clase_profesor_alumno` (
+  `id_clase` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_profesor` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_alumno` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_centro` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha_creacion` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_clase`,`id_profesor`,`id_alumno`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `clase_profesor_alumno`
+--
+
+LOCK TABLES `clase_profesor_alumno` WRITE;
+/*!40000 ALTER TABLE `clase_profesor_alumno` DISABLE KEYS */;
+INSERT INTO `clase_profesor_alumno` VALUES ('40101001','20010001','301010101','00000001','2025-06-20 13:18:00'),('40101001','20010001','301010102','00000001','2025-06-20 13:18:00'),('40101002','20010001','301030103','00000001','2025-10-08 17:47:15'),('40102001','20010002','301010201','00000001','2025-11-13 10:19:48'),('40102001','20010002','301010202','00000001','2025-11-13 10:40:39'),('40102001','20010002','301010203','00000001','2025-11-13 10:48:32'),('40102001','20010002','301010204','00000001','2025-11-13 11:24:13'),('40102001','20010002','301010205','00000001','2025-11-13 11:45:13'),('40102001','20010002','301010206','00000001','2025-11-13 11:54:49'),('40102002','20010002','301020201','00000001','2025-11-13 16:04:43'),('40102002','20010002','301020202','00000001','2025-11-13 16:04:52'),('40103001','20010003','301010301','00000001','2025-11-13 15:09:11'),('40103001','20010003','301010302','00000001','2025-11-13 15:09:30'),('40104001','20010004','301010401','00000001','2025-11-13 15:07:47'),('40104001','20010004','301010402','00000001','2025-11-13 15:08:10');
+/*!40000 ALTER TABLE `clase_profesor_alumno` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `curso_escolar`
+--
+
+DROP TABLE IF EXISTS `curso_escolar`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `curso_escolar` (
+  `id` year NOT NULL,
+  `descripcion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fecha_creacion` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `curso_escolar`
+--
+
+LOCK TABLES `curso_escolar` WRITE;
+/*!40000 ALTER TABLE `curso_escolar` DISABLE KEYS */;
+INSERT INTO `curso_escolar` VALUES (2012,'Curso académico Covid','2025-10-21 09:47:52'),(2019,'Curso escolar prueba','2025-10-21 09:46:43'),(2020,'Curso académico Covid','2025-10-21 09:42:20'),(2023,'Curso escolar prueba','2025-07-07 09:05:35'),(2024,'Curso académico Covid','2025-06-20 13:18:00'),(2026,'Curso 2025-2026','2025-07-08 08:03:43');
+/*!40000 ALTER TABLE `curso_escolar` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `director`
+--
+
+DROP TABLE IF EXISTS `director`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `director` (
+  `id` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_centro` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `apellidos` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `edad` int NOT NULL,
+  `sexo` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefono` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `contrasenya` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nacionalidad` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `titulacion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `acuerdo_confidencialidad` tinyint NOT NULL,
+  `curso_escolar_id` year NOT NULL,
+  `fecha_creacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_actualizacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `verified` tinyint NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IDX_ee3063e394bf69b0a6157fdaa6` (`email`),
+  KEY `FK_e86cdc7a74b6ee11ddb7e0118fa` (`id_centro`),
+  KEY `FK_1198c915cc7e9375959ced15365` (`curso_escolar_id`),
+  CONSTRAINT `FK_1198c915cc7e9375959ced15365` FOREIGN KEY (`curso_escolar_id`) REFERENCES `curso_escolar` (`id`) ON DELETE RESTRICT,
+  CONSTRAINT `FK_e86cdc7a74b6ee11ddb7e0118fa` FOREIGN KEY (`id_centro`) REFERENCES `centro` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `director`
+--
+
+LOCK TABLES `director` WRITE;
+/*!40000 ALTER TABLE `director` DISABLE KEYS */;
+INSERT INTO `director` VALUES ('10010001','00000001','Pepe','Pérez',45,'Masculino','600123123','oli@ejemplo.com','$2b$10$xKGw8cCC7drl3zT1ax8XiuLs/0ac2GyNUy3ggNkloJ3mJJXWcEOoq','Española','Licenciado en Educación',1,2024,'2025-10-29 10:59:24','2025-10-29 10:59:55',1),('10010002','00000001','Camilo','Gon',45,'Masculino','600123123','samuel@gmail.com','$2b$10$Z0JpDpKrXOu44XPcVR9ceuLVNW/O9u/h11qOKW0VY5hStbJ/U3Vbe','Española','Licenciado en Educación',1,2024,'2025-10-29 18:03:30','2025-10-29 18:03:42',1),('10010003','00000001','Sama','Gon',45,'Masculino','600123123','sama@gmail.com','$2b$10$2ZDT1A3/dX.htixQ5k5QveLW2.pAmXbFmHSNKtfbNEv4X7jKucikm','Española','Licenciado en Educación',1,2024,'2025-10-29 18:31:09','2025-10-29 18:49:08',1),('10010004','00000001','Maria','De laO',32,'Femenino','660988637','maria@email.com','$2b$10$2yBmkJKeqMr44pu94EHN8.fH1YTmnLWZuftxkljMLG1doPUvdGesi','Española','Licenciado en Educación',1,2024,'2025-11-13 09:18:42','2025-11-13 09:19:51',1);
+/*!40000 ALTER TABLE `director` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `profesor`
+--
+
+DROP TABLE IF EXISTS `profesor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `profesor` (
+  `id` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo_publico` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_centro` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `apellidos` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `edad` int NOT NULL,
+  `sexo` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nacionalidad` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `titulacion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `anyos_docencia` int NOT NULL,
+  `anyos_antiguedad` int NOT NULL,
+  `asignatura` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `acuerdo_confidencialidad` tinyint NOT NULL,
+  `curso_escolar_id` year NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `contrasenya` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha_creacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_actualizacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `verified` tinyint NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IDX_db1817be51b0c12a7464409697` (`codigo_publico`),
+  UNIQUE KEY `IDX_261ab62626f93d5d3524c4eeb3` (`email`),
+  KEY `FK_05e1702e710cf2d4ca790e06fa1` (`id_centro`),
+  KEY `FK_b555875fa5a803465fad500d34c` (`curso_escolar_id`),
+  CONSTRAINT `FK_05e1702e710cf2d4ca790e06fa1` FOREIGN KEY (`id_centro`) REFERENCES `centro` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_b555875fa5a803465fad500d34c` FOREIGN KEY (`curso_escolar_id`) REFERENCES `curso_escolar` (`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `profesor`
+--
+
+LOCK TABLES `profesor` WRITE;
+/*!40000 ALTER TABLE `profesor` DISABLE KEYS */;
+INSERT INTO `profesor` VALUES ('20010001','64CYTMFE','00000001','Constantino','Pérez',18,'Masculino','Bélgica','Máster en Educación',0,2,'Matemáticas',1,2024,'juan.perez@ejemplo.com','$2b$10$RowsHjc.dSKpyzFaIgk1XeIE0Kbk3GE9rfYC6dH66gShs7sYep34O','2025-06-20 15:18:00','2025-10-27 11:58:16',1),('20010002','HQE29NWQ','00000001','Estela','Gartijas',32,'Femenino','España','Licenciado en Educación',12,12,'Música',1,2024,'estela@email.com','$2b$10$xL9m5GjWRB5.ODAQjhgTbOKgEvXCTa0mpjLr2C3lq3OKZFYRB0ena','2025-11-13 09:05:02','2025-11-13 09:07:50',1),('20010003','BPU4ZZ4B','00000001','Lucia','García',21,'Femenino','Afganistán','Grado en Educación Primaria',1,1,'Física',1,2026,'lucia@email.com','$2b$10$JRNvcQDIGwpQbF.C4.5sHuvbIBFi8cl9ltbey6hAOJ.ulhUo/3kXS','2025-11-13 15:54:55','2025-11-13 15:55:58',1),('20010004','7V6WDU5T','00000001','Lolo','Lolailo',31,'Masculino','Afganistán','Licenciado en Educación',3,3,'Naturales',1,2026,'lolo@email.com','$2b$10$7RbaETFzf5nlwmybStyaAOjo2R.Gi5Z04Mq48ECITRz.MOlgl.FZm','2025-11-13 15:57:42','2025-11-13 15:57:58',1),('20010005','5QTB6FBX','00000001','Lola','Faraona',56,'Femenino','España','Licenciado en Educación',34,34,'Música',1,2026,'lola@email.com','$2b$10$82A.RG0ZwfQZhUIKZ/GXd.VqwjjBvOGKsW2OT8xDRfDWSdbQhFsgy','2025-11-13 18:12:33','2025-11-13 18:13:49',1);
+/*!40000 ALTER TABLE `profesor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `token`
+--
+
+DROP TABLE IF EXISTS `token`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `token` (
+  `id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `userId` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expiresAt` datetime NOT NULL,
+  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `role` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `token`
+--
+
+LOCK TABLES `token` WRITE;
+/*!40000 ALTER TABLE `token` DISABLE KEYS */;
+INSERT INTO `token` VALUES ('0cccee8f-d052-479e-ad2c-e047d717a10d','20010002','verify','2025-10-02 20:01:35','2025-10-01 20:01:35','profesor'),('16cda741-35cd-4667-ad80-044fcdfaeb38','20010002','verify','2025-07-19 12:47:14','2025-07-18 12:47:13',''),('17b2de45-f34f-4e94-85f7-43babaea10ba','10010001','verify','2025-10-30 10:59:24','2025-10-29 10:59:24','director'),('1ed2eb4e-7cf3-4c61-984e-ff8dbd504396','QPK52736','verify','2025-10-02 20:03:05','2025-10-01 20:03:04','admin'),('265eb1af-bc3d-415a-9326-7889e7aa2a15','10010002','verify','2025-10-02 19:59:39','2025-10-01 19:59:38','director'),('4a2d82fa-5648-485b-a61b-2f1badc3113a','10010003','verify','2025-10-02 20:15:09','2025-10-01 20:15:08','director'),('5633d46e-aa44-47a8-b3fa-0de4f932cc99','20020001','verify','2025-07-22 11:52:45','2025-07-21 11:52:44','profesor'),('5b03605a-b14a-4b99-9875-de908bd4743a','SMZ94185','verify','2025-10-03 18:47:05','2025-10-02 18:47:04','admin'),('66f380ed-1ef4-4634-b526-0ab53d731cdf','20010002','verify','2025-07-19 13:22:09','2025-07-18 13:22:08',''),('67762f89-dc7d-4910-ad84-8788b5c0f21b','10010003','verify','2025-10-30 18:31:10','2025-10-29 18:31:09','director'),('68b78ce5-c34d-40b9-8e5d-ae039d80ec78','20010002','verify','2025-07-19 13:23:32','2025-07-18 13:23:32',''),('6ba769fb-1ad5-4d15-b8ed-d3c5fde13984','RZO55892','verify','2025-07-22 11:39:33','2025-07-21 11:39:33','admin'),('796b2c5d-9764-49b1-aa88-48f5c5165412','20010002','verify','2025-07-19 13:00:07','2025-07-18 13:00:06',''),('81260d7a-0edd-4d87-ae15-6b5f97f10de2','10010002','verify','2025-10-30 18:03:30','2025-10-29 18:03:30','director'),('890457be-7af5-4dc7-9d72-bb8c8226a565','LNK72657','verify','2025-09-25 17:55:03','2025-09-24 17:55:03','admin'),('8e6f94e8-2bfc-48d1-9948-653a41ea53d8','20010002','verify','2025-07-19 12:12:31','2025-07-18 12:12:31',''),('99e1424c-33e6-42c3-a0c7-d22aecb29775','20010004','verify','2025-07-19 12:32:32','2025-07-18 12:32:31',''),('ace0a87c-947a-46cf-b94c-77044993aee8','20010003','verify','2025-07-19 12:25:32','2025-07-18 12:25:32',''),('b8463dbc-d5fe-47f3-96d1-f91cc62ed32f','SNI38555','verify','2025-10-03 12:29:25','2025-10-02 12:29:24','admin'),('c5757475-3a8f-4b85-a1ae-e429bf7c8f96','JEC80211','verify','2025-07-22 11:34:34','2025-07-21 11:34:34','admin'),('c7ab4d0a-f47f-4f96-9240-fea6d55903d8','GMV22298','verify','2025-07-22 11:38:54','2025-07-21 11:38:53','admin'),('fcdd2ee7-24eb-4c61-a97a-69e957677a4a','FWI18691','verify','2025-07-22 11:22:17','2025-07-21 11:22:16','admin');
+/*!40000 ALTER TABLE `token` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'soled3m'
+--
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2025-11-15  7:43:15
