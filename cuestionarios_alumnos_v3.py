@@ -1,9 +1,9 @@
 import pandas as pd
-import requests
-import time
+
+
 
 campos_permitidos = {
-   
+    "alumno_id": 1,
     "codigo_clase": "9HUKDMTF",
     "auton1": 6,
     "condeval1": 3,
@@ -182,41 +182,30 @@ campos_permitidos = {
     "CRITCDC8": 3,
     "CRITCEM4": 4
 }
+# 1. Cargamos tu CSV limpio
+df = pd.read_csv("datos_finales_para_cuestionarios.csv", sep=";", encoding="utf-8")  # o el que hayas limpiado antes
 
+# 2. Definimos las columnas que te interesan (las claves del diccionario)
+campos_deseados = list(campos_permitidos.keys())
 
+print(campos_deseados)
 
-lista_de_campos = [ x for x in campos_permitidos.keys() ]
+# 3. Verificamos que todas existan (por si alguna cambió de nombre)
+columnas_faltantes = [col for col in campos_deseados if col not in df.columns]
+if columnas_faltantes:
+    print("Faltan columnas:", columnas_faltantes)
+else:
+    print("¡Todas las columnas están presentes!")
 
+# 4. ¡Magia! Convertimos todo el DataFrame a lista de diccionarios perfectos
+registros = df[campos_deseados].to_dict('records')
 
-URL_LOGIN = "http://localhost:5000/soled/alumno/login"
-URL_ENVIO_CC = "http://localhost:5000/soled/alumno/cuestionario/cc"
+# Ejemplo: ver el primer alumno
+print("Primer registro:")
+for k, v in registros[0].items():
+    print(f"  {k}: {v}")
 
-input_file = "datos_filtrados_para_cuestionarios.csv"
-
-df = pd.read_csv(input_file, sep=";", header=0, encoding="utf-8-sig")
-
-columnas_permitidas = [ x for x in campos_permitidos.keys() ]
-
-print("\nColumnas permitidas: \n", columnas_permitidas, "\ntotal columnas = ", len(columnas_permitidas))
-
-# columnas_dataframe = [col for col in df.columns]
-
-print("\nColumnas dataframe: \n", df.columns)
-
-columnas_faltantes=[col for col in columnas_permitidas if col not in df.columns]
-
-columnas_faltantes_from_set= list(set(columnas_permitidas) - set(df.columns))
-
-print("\nColumnas faltantes: ", columnas_faltantes, " numero de campos faltantes: ", len(columnas_faltantes))
-
-print("\nColumnas faltantes from set: ", columnas_faltantes_from_set, " numero de columnas faltantes: ", len(columnas_faltantes_from_set))
-
-
- 
-# Crea un CSV con exactamente 1 fila y N columnas (las que faltan)
-pd.DataFrame(columns=columnas_faltantes).iloc[:0].to_csv(
-    "columnas_faltantes_para_cc.csv",
-    sep=";",
-    index=False,
-    encoding="utf-8-sig"
-)
+# Si quieres guardarlo como JSON (ideal para APIs, MongoDB, etc.)
+import json
+with open("alumnos_limpios.json", "w", encoding="utf-8") as f:
+    json.dump(registros, f, ensure_ascii=False, indent=2)
