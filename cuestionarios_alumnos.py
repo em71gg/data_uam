@@ -5,12 +5,16 @@ import time
 # ========================= CONFIGURACIÓN =========================
 URL_LOGIN = "http://localhost:5000/soled/alumno/login"
 URL_CC    = "http://localhost:5000/soled/alumno/cuestionario/cc"
-CSV       = "datos_finales_para_cuestionarios.csv"
+CSV       = "datos_completos.csv"
 
 # ========================= CARGA Y LIMPIEZA DEL CSV =========================
 df = pd.read_csv(CSV, sep=";", encoding="utf-8")
-df = df.applymap(lambda x: pd.NA if str(x).strip().lower() == "nan" else x)
-df.columns = df.columns.str.strip().str.replace(r'\s+', '', regex=True)
+
+# df = df.applymap(lambda x: pd.NA if str(x).strip().lower() == "nan" else x)
+# df.columns = df.columns.str.strip().str.replace(r'\s+', '', regex=True)
+
+df = df.replace({"nan": pd.NA, "NaN": pd.NA})
+df.columns = df.columns.str.replace("\ufeff", "")  # quitar BOM si existe
 
 
 # Depuración: mostrar la cabecera real del CSV
